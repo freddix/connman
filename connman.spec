@@ -1,7 +1,7 @@
 Summary:	Connection Manager
 Name:		connman
 Version:	1.6
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://www.kernel.org/pub/linux/network/connman/%{name}-%{version}.tar.xz
@@ -83,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %systemd_preun connman.service
 
 %postun
-%systemd_reload
+%systemd_postun
 
 %files
 %defattr(644,root,root,755)
