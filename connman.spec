@@ -1,11 +1,11 @@
 Summary:	Connection Manager
 Name:		connman
-Version:	1.9
+Version:	1.10
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://www.kernel.org/pub/linux/network/connman/%{name}-%{version}.tar.xz
-# Source0-md5:	ba27f49c9d94bc2c885c9423fd4fc7bd
+# Source0-md5:	e20b8f0b5c6b7437b7544e278f3070ad
 URL:		http://connman.net/
 BuildRequires:	dbus-devel
 BuildRequires:	glib-devel
@@ -30,6 +30,14 @@ support all kinds of wired or wireless technologies. Also,
 configuration methods, like DHCP and domain name resolving, are
 implemented using plug-ins. The plug-in approach allows for easy
 adaption and modification for various use cases.
+
+%package vpn
+Summary:	VPN daemon
+Group:		Networking/Daemons
+Requires:	%{name} = %{version}-%{release}
+
+%description vpn
+VPN support for ConnMan.
 
 %package devel
 Summary:	Header files for ConnMan plugins
@@ -71,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/connman/{plugins,scripts}/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/connman/{plugins*,scripts}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -93,20 +101,29 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/connman/plugins
 %attr(755,root,root) %{_libdir}/connman/plugins/hh2serial-gps.so
 %attr(755,root,root) %{_libdir}/connman/plugins/iospm.so
-%attr(755,root,root) %{_libdir}/connman/plugins/l2tp.so
-%attr(755,root,root) %{_libdir}/connman/plugins/openconnect.so
-%attr(755,root,root) %{_libdir}/connman/plugins/openvpn.so
-%attr(755,root,root) %{_libdir}/connman/plugins/pptp.so
 %attr(755,root,root) %{_libdir}/connman/plugins/tist.so
-%attr(755,root,root) %{_libdir}/connman/plugins/vpnc.so
 %dir %{_libdir}/connman/scripts
 %attr(755,root,root) %{_libdir}/connman/scripts/libppp-plugin.so*
-%attr(755,root,root) %{_libdir}/connman/scripts/openconnect-script
-%attr(755,root,root) %{_libdir}/connman/scripts/openvpn-script
 /etc/dbus-1/system.d/connman.conf
 /etc/dbus-1/system.d/connman-nmcompat.conf
 /usr/share/polkit-1/actions/net.connman.policy
 %{systemdunitdir}/connman.service
+
+%files vpn
+%defattr(644,root,root,755)
+%dir %{_libdir}/connman/plugins-vpn
+%attr(755,root,root) %{_libdir}/connman/plugins-vpn/l2tp.so
+%attr(755,root,root) %{_libdir}/connman/plugins-vpn/openconnect.so
+%attr(755,root,root) %{_libdir}/connman/plugins-vpn/openvpn.so
+%attr(755,root,root) %{_libdir}/connman/plugins-vpn/pptp.so
+%attr(755,root,root) %{_libdir}/connman/plugins-vpn/vpnc.so
+%attr(755,root,root) %{_libdir}/connman/scripts/openconnect-script
+%attr(755,root,root) %{_libdir}/connman/scripts/openvpn-script
+%attr(755,root,root) %{_sbindir}/connman-vpnd
+%{_datadir}/dbus-1/system-services/net.connman.vpn.service
+%{_datadir}/polkit-1/actions/net.connman.vpn.policy
+%{_sysconfdir}/dbus-1/system.d/connman-vpn-dbus.conf
+%{systemdunitdir}/connman-vpn.service
 
 %files devel
 %defattr(644,root,root,755)
