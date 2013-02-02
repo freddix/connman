@@ -1,11 +1,11 @@
 Summary:	Connection Manager
 Name:		connman
-Version:	1.10
+Version:	1.11
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://www.kernel.org/pub/linux/network/connman/%{name}-%{version}.tar.xz
-# Source0-md5:	e20b8f0b5c6b7437b7544e278f3070ad
+# Source0-md5:	72cd18041abb17997b32fe6df6b52f5c
 URL:		http://connman.net/
 BuildRequires:	dbus-devel
 BuildRequires:	glib-devel
