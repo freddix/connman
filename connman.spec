@@ -1,11 +1,11 @@
 Summary:	Connection Manager
 Name:		connman
-Version:	1.13
+Version:	1.14
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://www.kernel.org/pub/linux/network/connman/%{name}-%{version}.tar.xz
-# Source0-md5:	0623d4afe3792378da5818e2970c5f1c
+# Source0-md5:	6c9ecaf9c044f8c66a7b465f6716b569
 URL:		http://connman.net/
 BuildRequires:	dbus-devel
 BuildRequires:	glib-devel
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/dbus-1/system.d/connman-nmcompat.conf
 /usr/share/polkit-1/actions/net.connman.policy
 %{systemdunitdir}/connman.service
+
+%{_mandir}/man5/connman.conf.5*
+%{_mandir}/man8/connman.8*
 
 %files vpn
 %defattr(644,root,root,755)
