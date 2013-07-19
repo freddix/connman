@@ -1,7 +1,7 @@
 Summary:	Connection Manager
 Name:		connman
 Version:	1.16
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://www.kernel.org/pub/linux/network/connman/%{name}-%{version}.tar.xz
@@ -56,6 +56,7 @@ Header files for ConnMan plugins.
 	PPTP=/usr/sbin/pptp			\
 	WPASUPPLICANT=/usr/sbin/wpa_supplicant	\
 	--disable-silent-rules			\
+	--enable-client				\
 	--enable-hh2serial-gps			\
 	--enable-iospm				\
 	--enable-l2tp				\
@@ -64,7 +65,6 @@ Header files for ConnMan plugins.
 	--enable-openvpn			\
 	--enable-polkit				\
 	--enable-pptp				\
-	--enable-threads			\
 	--enable-tist				\
 	--enable-vpnc				\
 	--with-openconnect=/usr/sbin/openconnect	\
@@ -75,9 +75,12 @@ Header files for ConnMan plugins.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_bindir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install client/connmanctl $RPM_BUILD_ROOT%{_bindir}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/connman/{plugins*,scripts}/*.la
 
@@ -96,6 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README TODO
+%attr(755,root,root) %{_bindir}/connmanctl
 %attr(755,root,root) %{_sbindir}/connmand
 %dir %{_libdir}/connman
 %dir %{_libdir}/connman/plugins
